@@ -1,0 +1,14 @@
+{
+  "name": "Allahardan Telecom হিসাব",
+  "short_name": "Allahardan",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1B365D",
+  "theme_color": "#1B365D",
+  "lang": "bn",
+  "icons": [
+    { "src": "https://i.ibb.co.com/841wVn5/image-ad44ea.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "https://i.ibb.co.com/841wVn5/image-ad44ea.png", "sizes": "192x192", "type": "image/png", "purpose": "any" }
+  ]
+}
