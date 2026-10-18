@@ -118,6 +118,7 @@ body{font-family:'Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transpar
  <div id="seg" class="flex gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl text-sm mb-3 overflow-x-auto no-sb"></div>
  <form id="form" onsubmit="submitForm(event)" class="space-y-2.5"></form>
 </div>
+<div id="warn" class="hidden fixed bottom-20 md:bottom-4 left-1/2 -translate-x-1/2 z-[60] w-[92vw] max-w-md bg-red-600 text-white px-4 py-3 rounded-2xl shadow-xl"><p id="warn-t" class="font-semibold text-sm"></p><p id="warn-m" class="text-xs mt-1 opacity-90"></p><button onclick="flush(true)" class="mt-2 px-3 py-1 rounded-full bg-white text-red-600 text-xs font-semibold">আবার চেষ্টা করুন</button></div>
 <div id="toast" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-[60] bg-slate-800 text-white text-sm px-4 py-2 rounded-full shadow-lg"></div>
 <datalist id="plist"></datalist>
 
@@ -142,10 +143,31 @@ const save = () => { try { localStorage.setItem('at-data', JSON.stringify(S)); }
 let Q=[]; try{Q=JSON.parse(localStorage.getItem('at-q'))||[]}catch(e){}
 const saveQ=()=>{try{localStorage.setItem('at-q',JSON.stringify(Q))}catch(e){}};
 
+let lastErr='';
+// লেখা: সার্ভারের উত্তর পড়ে নিশ্চিত হয় (নিশ্চিত না হওয়া পর্যন্ত এন্ট্রি ফোনে জমা থাকে ও বারবার চেষ্টা হয়)
+function send(p){return new Promise(res=>{
+  const cb='jw'+Math.random().toString(36).slice(2),s=document.createElement('script');let got=false;
+  const end=r=>{clearTimeout(tm);delete window[cb];s.remove();res(r)};
+  const tm=setTimeout(()=>end({ok:false,m:'net'}),25000);
+  window[cb]=r=>{got=true;end(r&&r.status==='success'?{ok:true}:{ok:false,m:(r&&r.message)||'error'})};
+  s.onerror=()=>end({ok:false,m:'net'});
+  s.onload=()=>{if(!got)end({ok:false,m:'access'})};
+  s.src=URL_+'?action=write&callback='+cb+'&payload='+encodeURIComponent(JSON.stringify(p))+'&_='+Date.now();
+  document.body.appendChild(s);
+})}
 async function flush(){
-  if(flush.busy||!Q.length)return; flush.busy=true;
-  try{for(const b of Q.slice())await fetch(URL_,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(b)})}catch(e){}
-  flush.busy=false;
+  if(flush.busy)return; flush.busy=true;
+  for(const q of Q.filter(x=>!x.ok)){
+    const {t,ok,...p}=q, r=await send(p);
+    if(r.ok){q.ok=Date.now();saveQ();lastErr='';toast('Excel এ সেভ হয়েছে ✓')}else{lastErr=r.m;break}
+  }
+  flush.busy=false;warn();
+}
+function warn(){
+  const n=Q.filter(x=>!x.ok).length,w=$('warn');
+  if(!n||!lastErr){w.classList.add('hidden');return}
+  const h=lastErr==='access'?'Apps Script → Deploy → Manage deployments → "Who has access" = Anyone করে New version ডিপ্লয় করুন':lastErr==='net'?'ইন্টারনেট বা Apps Script লিংকে সংযোগ হচ্ছে না':/Invalid Action/.test(lastErr)?'Code.gs এর নতুন ভার্সন Apps Script এ পেস্ট করে New version ডিপ্লয় করুন':lastErr;
+  $('warn-t').textContent=bn(n)+'টি এন্ট্রি Excel এ যায়নি (ফোনে সেভ আছে, নিজে থেকে আবার চেষ্টা হবে)';$('warn-m').textContent=h;w.classList.remove('hidden');
 }
 const post = b => {Q.push(Object.assign({t:Date.now()},b));saveQ();flush()};
 
@@ -154,17 +176,15 @@ function reconcile(srv){
   const keep=[];
   Q.forEach(q=>{
     const rows=srv[q.sheet]; if(!rows)return;
-    const row=rows.find(x=>String(x.ID)===String(q.action==='add'?q.row.ID:q.id));
+    const aged=q.ok&&Date.now()-q.ok>12e4,row=rows.find(x=>String(x.ID)===String(q.action==='add'?q.row.ID:q.id));
     if(q.action==='add'){
-      if(row)return;
+      if(row||aged)return;
       rows.push(q.row);
       if(q.sheet==='Sales'&&q.row.ProductID){const p=srv.Products.find(x=>String(x.ID)===String(q.row.ProductID));if(p)p.Stock=num(p.Stock)-num(q.row.Qty)}
       keep.push(q);
-    }else if(row){
-      if(!Object.keys(q.fields).every(k=>String(row[k]??'')===String(q.fields[k]??''))){Object.assign(row,q.fields);keep.push(q)}
-    }
+    }else if(row&&!aged&&!Object.keys(q.fields).every(k=>String(row[k]??'')===String(q.fields[k]??''))){Object.assign(row,q.fields);keep.push(q)}
   });
-  Q=keep.filter(q=>Date.now()-q.t<6048e5);saveQ();
+  Q=keep;saveQ();
 }
 
 let busy=false;
@@ -293,7 +313,7 @@ function submitForm(e){
   }else if(cur==='Product'){
     sheet='Products';row={ID:'P-'+T,Name:v.Name,Category:v.Category,BuyPrice:num(v.BuyPrice),SellPrice:num(v.SellPrice),Stock:num(v.Stock),MinStock:5};
   }else{sheet='Ledger';row={ID:'L-'+T,Date:date,Type:cur,Category:v.Category,Note:v.Note,Amount:num(v.Amount)}}
-  S[sheet].push(row);save();render();closeSheet();toast('সেভ হয়েছে ✓');
+  S[sheet].push(row);save();render();closeSheet();toast('ফোনে সেভ হয়েছে, Excel এ পাঠানো হচ্ছে…');
   post({action:'add',sheet,row});later();
 }
 
@@ -313,7 +333,7 @@ $('install').onclick=async()=>{if(!dp)return;dp.prompt();await dp.userChoice;dp=
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(()=>{}));
 
 go('home');render();flush();fetchData();
-setInterval(refresh,30000);
+setInterval(refresh,30000);setInterval(flush,10000);
 document.addEventListener('visibilitychange',refresh);
 addEventListener('online',refresh);
 </script>
