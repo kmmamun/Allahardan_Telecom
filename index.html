@@ -23,14 +23,31 @@ body{font-family:'Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transpar
 .sheet{transform:translateY(100%);transition:transform .22s ease}.sheet.open{transform:none}
 .safe-b{padding-bottom:env(safe-area-inset-bottom,0)}
 .card{background:#fff}.dark .card{background:#1e293b}
-@media(min-width:768px){.sheet{left:50%;right:auto;width:28rem;bottom:auto;top:50%;transform:translate(-50%,-40%);opacity:0;pointer-events:none;border-radius:1.5rem}.sheet.open{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}}
+@media(min-width:768px){
+ .sheet{left:50%!important;right:auto!important;top:50%!important;bottom:auto!important;width:28rem;max-width:92vw;max-height:90vh;transform:translate(-50%,-44%);opacity:0;pointer-events:none;border-radius:1.5rem!important;background:#fff!important;box-shadow:0 25px 60px rgba(15,23,42,.35)}
+ .dark .sheet{background:#1e293b!important}
+ .sheet.open{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}
+ #bd{backdrop-filter:blur(4px)}
+ body{background-image:linear-gradient(135deg,#dbe7ff 0%,#eceeff 45%,#fde6ee 100%);background-attachment:fixed}
+ .dark body{background-image:linear-gradient(135deg,#0b1220 0%,#111a33 55%,#1a1230 100%)}
+ .card{background:rgba(255,255,255,.66);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.85);box-shadow:0 8px 30px rgba(80,100,160,.10)}
+ .dark .card{background:rgba(30,41,59,.6);border-color:rgba(255,255,255,.07);box-shadow:none}
+}
+@media(min-width:1024px){
+ .panel{background:rgba(255,255,255,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.85);border-radius:1.5rem;padding:1rem;box-shadow:0 8px 30px rgba(80,100,160,.10)}
+ .dark .panel{background:rgba(30,41,59,.5);border-color:rgba(255,255,255,.07);box-shadow:none}
+ .rpanel{position:sticky;top:1rem;max-height:calc(100vh - 2rem);overflow-y:auto;scrollbar-width:none}
+ .rpanel::-webkit-scrollbar{display:none}
+ .rpanel .card{box-shadow:none}
+}
 </style>
 </head>
 <body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100">
-<div class="min-h-screen md:pl-56 pb-24 md:pb-8">
- <div class="max-w-6xl mx-auto px-4">
+<div class="min-h-screen md:pl-72 pb-24 md:pb-8">
+ <div class="max-w-7xl mx-auto px-4">
   <header class="flex items-center justify-between py-4">
-   <div class="flex items-center gap-2.5">
+   <h2 id="vt" class="hidden md:block text-2xl font-bold text-brandBlue dark:text-white">ড্যাশবোর্ড</h2>
+   <div class="flex md:hidden items-center gap-2.5">
     <div class="bg-brandYellow text-brandBlue w-10 h-10 rounded-xl flex items-center justify-center shadow"><i class="fa-solid fa-mobile-screen-button text-lg"></i></div>
     <div class="leading-tight"><h1 class="font-bold text-brandBlue dark:text-white">Allahardan Telecom</h1><p class="text-[11px] text-slate-500 dark:text-slate-400">Mobile Phone Sell and Service</p></div>
    </div>
@@ -40,8 +57,10 @@ body{font-family:'Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transpar
    </div>
   </header>
 
-  <section id="v-home" class="md:grid md:grid-cols-5 md:gap-5 items-start">
-   <div class="md:col-span-2 md:sticky md:top-4">
+  <section id="v-home" class="lg:grid lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-5 items-start">
+  <div class="min-w-0">
+  <div class="lg:grid lg:grid-cols-5 lg:gap-5 items-start">
+   <div class="lg:col-span-3">
     <div class="hero rounded-3xl p-4 text-white shadow-lg shadow-blue-900/20">
      <p class="text-xs text-blue-100"><i class="fa-solid fa-wallet mr-1"></i><span id="plabel"></span></p>
      <h2 id="bal" class="text-4xl font-bold mt-1 mb-3">৳ ০</h2>
@@ -54,7 +73,14 @@ body{font-family:'Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transpar
     </div>
     <div class="grid grid-cols-4 gap-2.5 mt-4" id="quick"></div>
    </div>
-   <div class="md:col-span-3 mt-5 md:mt-0">
+   <div class="hidden lg:block lg:col-span-2 card rounded-3xl p-4"><div class="flex justify-between items-center mb-2"><h3 class="font-bold text-sm">সাপ্তাহিক আয়-ব্যয়</h3><span class="flex gap-3 text-[11px] text-slate-500"><span><i class="fa-solid fa-circle text-[7px] text-brandSky"></i> আয়</span><span><i class="fa-solid fa-circle text-[7px] text-brandOrange"></i> ব্যয়</span></span></div><div id="c-trend"></div></div>
+  </div>
+  <div class="hidden lg:grid grid-cols-5 gap-5 mt-5">
+   <div class="col-span-3 card rounded-3xl p-4"><div class="flex justify-between items-center mb-2"><h3 class="font-bold text-sm">মাসিক হিসাব</h3><span class="flex gap-3 text-[11px] text-slate-500"><span><i class="fa-solid fa-circle text-[7px] text-brandSky"></i> আয়</span><span><i class="fa-solid fa-circle text-[7px] text-brandOrange"></i> ব্যয়</span></span></div><div id="c-bars"></div></div>
+   <div class="col-span-2 card rounded-3xl p-4"><h3 class="font-bold text-sm mb-2">আয় বনাম ব্যয়</h3><div id="c-donut" class="relative"></div></div>
+  </div>
+ </div>
+ <div class="mt-5 lg:mt-0 panel rpanel">
     <div id="chips" class="flex gap-2 overflow-x-auto no-sb"></div>
     <div id="strip" class="mt-3 px-3 py-2 rounded-xl bg-blue-50 dark:bg-slate-800 text-xs flex justify-between font-medium"></div>
     <h3 class="font-bold text-brandBlue dark:text-white mt-4">সাম্প্রতিক লেনদেন</h3>
@@ -80,8 +106,10 @@ body{font-family:'Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transpar
  </div>
 </div>
 
-<nav id="nav" class="fixed z-40 bottom-0 inset-x-0 md:inset-y-0 md:right-auto md:w-56 card shadow-[0_-4px_20px_rgba(0,0,0,.08)] md:shadow-lg rounded-t-3xl md:rounded-none safe-b">
- <div class="grid grid-cols-5 items-center h-16 px-2 md:flex md:flex-col md:items-stretch md:h-auto md:p-3 md:gap-1 md:pt-6" id="navi"></div>
+<nav id="nav" class="fixed z-40 bottom-0 inset-x-0 md:inset-y-4 md:left-4 md:right-auto md:w-60 card shadow-[0_-4px_20px_rgba(0,0,0,.08)] rounded-t-3xl md:rounded-3xl safe-b">
+ <div class="hidden md:flex items-center gap-2.5 px-5 pt-5"><img src="icon-192.png" alt="" class="w-10 h-10 rounded-xl shadow"><div class="leading-tight"><p class="font-bold text-brandBlue dark:text-white">Allahardan</p><p class="text-[11px] text-slate-400">Telecom</p></div></div>
+ <div class="grid grid-cols-5 items-center h-16 px-2 md:flex md:flex-col md:items-stretch md:h-auto md:p-3 md:gap-1 md:pt-5" id="navi"></div>
+ <div class="hidden md:block absolute bottom-4 inset-x-4 rounded-2xl p-4 text-center bg-white/50 dark:bg-slate-900/40"><i class="fa-solid fa-chart-pie text-3xl text-brandSky"></i><p class="font-semibold text-sm mt-2">রিপোর্ট</p><p class="text-[11px] text-slate-400">আয়-ব্যয় ও লাভের হিসাব</p><button onclick="go('report')" class="mt-3 w-full py-2 rounded-xl bg-brandBlue text-white text-sm">রিপোর্ট দেখুন</button></div>
 </nav>
 
 <div id="bd" onclick="closeSheet()" class="hidden fixed inset-0 bg-black/50 z-50"></div>
@@ -173,7 +201,7 @@ const META={
  Income:{l:'অন্য আয়',i:'fa-arrow-down',c:'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600',a:'text-emerald-600',s:'+'},
  Expense:{l:'ব্যয়',i:'fa-arrow-up',c:'bg-red-100 dark:bg-red-500/20 text-red-500',a:'text-red-500',s:'-'}};
 const PL={today:'আজ',month:'এই মাস',all:'সব'};
-function render(){ptabs();rHome();rService();rStock();rReport();$('plist').innerHTML=S.Products.map(p=>`<option value="${esc(p.Name)}">`).join('')}
+function render(){ptabs();rHome();rService();rStock();rReport();rCharts();$('plist').innerHTML=S.Products.map(p=>`<option value="${esc(p.Name)}">`).join('')}
 function ptabs(){document.querySelectorAll('.ptabs').forEach(el=>{const hero=el.closest('.hero');el.innerHTML=Object.keys(PL).map(k=>`<button data-p="${k}" class="flex-1 py-1.5 rounded-full font-medium ${period===k?'bg-white text-brandBlue shadow':hero?'text-white/90':'text-slate-500'}">${PL[k]}</button>`).join('')})}
 function rHome(){
   const all=txs(), rows=all.filter(inP);
@@ -211,6 +239,21 @@ function rReport(){
   const sp=sum('Sale','pr'),vp=sum('Service','pr'),inc=sum('Income','a'),ex=sum('Expense','a'),net=sp+vp+inc-ex;
   const c=[['মালামাল বিক্রি',sum('Sale','a'),'text-brandOrange'],['মালামাল লাভ',sp,'text-emerald-600'],['সার্ভিস আয়',sum('Service','a'),'text-brandSky'],['সার্ভিস লাভ',vp,'text-emerald-600'],['অন্য আয়',inc,'text-emerald-600'],['মোট ব্যয়',ex,'text-red-500'],['নিট লাভ',net,net>=0?'text-emerald-600':'text-red-500'],['মোট বাকি',txs().filter(t=>t.sh).reduce((s,t)=>s+Math.max(0,t.a-t.p),0),'text-red-500']];
   $('rep').innerHTML=c.map(([l,v,cl])=>`<div class="card rounded-2xl p-3.5 shadow-sm"><p class="text-xs text-slate-500">${l}</p><p class="text-xl font-bold mt-1 ${cl}">${taka(v)}</p></div>`).join('');
+}
+
+function rCharts(){
+  if(!$('c-trend'))return;
+  const all=txs(),now=new Date(),W=300,H=120,lb=(x,y,t)=>`<text x="${x}" y="${y}" text-anchor="middle" font-size="9" fill="currentColor" opacity=".5">${t}</text>`;
+  const agg=(fn,keys)=>keys.map(k=>{let i=0,o=0;all.forEach(t=>{if(fn(t)===k)t.k==='Expense'?o+=t.a:i+=t.p});return{i,o}});
+  const days=[...Array(7)].map((_,n)=>{const d=new Date(now);d.setDate(d.getDate()-6+n);return d}),dv=agg(t=>t.d,days.map(dkey));
+  const mx=Math.max(1,...dv.flatMap(x=>[x.i,x.o])),pts=f=>dv.map((x,n)=>[10+n*(W-20)/6,H-18-x[f]/mx*(H-38)]);
+  const sm=p=>p.map((q,n)=>n?`C${(p[n-1][0]+q[0])/2},${p[n-1][1]} ${(p[n-1][0]+q[0])/2},${q[1]} ${q[0]},${q[1]}`:`M${q[0]},${q[1]}`).join('');
+  $('c-trend').innerHTML=`<svg viewBox="0 0 ${W} ${H}" class="w-full"><path d="${sm(pts('i'))}" fill="none" stroke="#00A8E8" stroke-width="2.5" stroke-linecap="round"/><path d="${sm(pts('o'))}" fill="none" stroke="#F26522" stroke-width="2.5" stroke-linecap="round"/>${days.map((d,n)=>lb(10+n*(W-20)/6,H-3,d.toLocaleDateString('bn-BD',{weekday:'short'}))).join('')}</svg>`;
+  const ms=[...Array(6)].map((_,n)=>new Date(now.getFullYear(),now.getMonth()-5+n,1)),mv=agg(t=>t.d.slice(0,7),ms.map(d=>dkey(d).slice(0,7))),mm=Math.max(1,...mv.flatMap(x=>[x.i,x.o])),bw=50;
+  $('c-bars').innerHTML=`<svg viewBox="0 0 300 130" class="w-full">${mv.map((x,n)=>{const a=x.i/mm*95,b=x.o/mm*95,c=n*bw+bw/2;return `<rect x="${c-11}" y="${108-a}" width="9" height="${a}" rx="4.5" fill="#00A8E8"/><rect x="${c+2}" y="${108-b}" width="9" height="${b}" rx="4.5" fill="#F26522" opacity=".75"/>${lb(c,124,ms[n].toLocaleDateString('bn-BD',{month:'short'}))}`}).join('')}</svg>`;
+  let i=0,o=0;all.filter(inP).forEach(t=>t.k==='Expense'?o+=t.a:i+=t.p);
+  const R=44,C=2*Math.PI*R,f=i+o?i/(i+o):0;
+  $('c-donut').innerHTML=`<svg viewBox="0 0 120 120" class="w-36 mx-auto -rotate-90"><circle cx="60" cy="60" r="${R}" fill="none" stroke="${i+o?'#F26522':'#cbd5e1'}" stroke-opacity=".75" stroke-width="10"/><circle cx="60" cy="60" r="${R}" fill="none" stroke="#00A8E8" stroke-width="10" stroke-linecap="round" stroke-dasharray="${C*f} ${C}"/></svg><div class="absolute inset-0 flex flex-col items-center justify-center"><b>${taka(i-o)}</b><span class="text-[11px] text-slate-400">${PL[period]} নিট</span></div>`;
 }
 
 /* ---------- Actions ---------- */
@@ -258,8 +301,8 @@ function submitForm(e){
 const NAV=[['home','হোম','fa-house'],['service','সার্ভিস','fa-screwdriver-wrench'],['fab'],['stock','স্টক','fa-boxes-stacked'],['report','রিপোর্ট','fa-chart-pie']];
 $('navi').innerHTML=NAV.map(n=>n[0]==='fab'?`<div class="flex justify-center md:order-first md:mb-3"><button onclick="openSheet('Sale')" class="-mt-8 md:mt-0 w-14 h-14 md:w-full md:h-11 rounded-full md:rounded-xl bg-brandSky text-white shadow-lg shadow-sky-500/40 flex items-center justify-center gap-2 text-2xl md:text-sm md:font-semibold border-4 md:border-0 border-slate-50 dark:border-slate-900"><i class="fa-solid fa-plus"></i><span class="hidden md:inline">নতুন এন্ট্রি</span></button></div>`:`<button data-nav="${n[0]}" onclick="go('${n[0]}')" class="flex flex-col md:flex-row items-center md:gap-3 md:px-3 md:py-2.5 md:rounded-xl gap-0.5 text-xs md:text-sm text-slate-400"><i class="fa-solid ${n[2]} text-lg md:w-5"></i>${n[1]}</button>`).join('');
 function go(v){view=v;['home','service','stock','report'].forEach(x=>$('v-'+x).classList.toggle('hidden',x!==v));
-  document.querySelectorAll('[data-nav]').forEach(b=>{const on=b.dataset.nav===v;b.classList.toggle('text-brandSky',on);b.classList.toggle('md:bg-sky-50',on);b.classList.toggle('dark:md:bg-slate-700',on)});scrollTo(0,0)}
-document.addEventListener('click',e=>{const b=e.target.closest('[data-p]');if(b){period=b.dataset.p;ptabs();rHome();rReport()}});
+  document.querySelectorAll('[data-nav]').forEach(b=>{const on=b.dataset.nav===v;b.classList.toggle('text-brandSky',on);b.classList.toggle('md:bg-sky-50',on);b.classList.toggle('dark:md:bg-slate-700',on)});$('vt').textContent=({home:'ড্যাশবোর্ড',service:'সার্ভিস',stock:'স্টক',report:'রিপোর্ট'})[v];scrollTo(0,0)}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-p]');if(b){period=b.dataset.p;ptabs();rHome();rReport();rCharts()}});
 $('quick').innerHTML=[['Sale','fa-cart-shopping','bg-orange-100 dark:bg-orange-500/20 text-brandOrange','মালামাল'],['Service','fa-screwdriver-wrench','bg-sky-100 dark:bg-sky-500/20 text-brandSky','সার্ভিস'],['Income','fa-plus','bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600','অন্য আয়'],['Expense','fa-minus','bg-red-100 dark:bg-red-500/20 text-red-500','ব্যয়']].map(q=>`<button onclick="openSheet('${q[0]}')" class="card rounded-2xl py-3 shadow-sm flex flex-col items-center gap-1.5"><span class="w-10 h-10 rounded-full flex items-center justify-center ${q[2]}"><i class="fa-solid ${q[1]}"></i></span><span class="text-[11px] font-medium">${q[3]}</span></button>`).join('');
 function dark(){const on=document.documentElement.classList.toggle('dark');$('dk').className='fa-solid text-sm '+(on?'fa-sun':'fa-moon');try{localStorage.setItem('at-dark',on?'1':'0')}catch(e){}}
 try{if(localStorage.getItem('at-dark')==='1')dark()}catch(e){}
