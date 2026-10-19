@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Allahardan Telecom</title>
 <meta name="theme-color" content="#1B365D">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
@@ -16,8 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{brandBlue:'#1B365D',brandOrange:'#F26522',brandYellow:'#FFDE17',brandSky:'#00A8E8'}}}}</script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
-body{font-family:'Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transparent}
+body{font-family:'Inter','Noto Sans Bengali','Hind Siliguri',system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
 .hero{background:linear-gradient(135deg,#1B365D 0%,#245a9e 60%,#00A8E8 130%)}
 .no-sb::-webkit-scrollbar{display:none}.no-sb{scrollbar-width:none}
 .sheet{transform:translateY(100%);transition:transform .22s ease}.sheet.open{transform:none}
@@ -52,16 +53,17 @@ body{font-family:'Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transpar
     <div class="leading-tight"><h1 class="font-bold text-brandBlue dark:text-white">Allahardan Telecom</h1><p class="text-[11px] text-slate-500 dark:text-slate-400">Mobile Phone Sell and Service</p></div>
    </div>
    <div class="flex items-center gap-2">
+    <button id="lang" onclick="setLang()" class="h-9 px-3 rounded-full card text-xs font-semibold shadow-sm">EN</button>
     <button id="install" class="hidden h-9 px-3 rounded-full bg-brandOrange text-white text-xs shadow"><i class="fa-solid fa-download mr-1"></i>ইনস্টল</button>
     <button onclick="dark()" class="w-9 h-9 rounded-full card shadow-sm text-slate-600 dark:text-yellow-300"><i id="dk" class="fa-solid fa-moon text-sm"></i></button>
    </div>
   </header>
 
-  <section id="v-home" class="lg:grid lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-5 items-start">
+  <section id="v-home" class="lg:grid lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-5 items-start">
   <div class="min-w-0">
-  <div class="lg:grid lg:grid-cols-5 lg:gap-5 items-start">
-   <div class="lg:col-span-3">
-    <div class="hero rounded-3xl p-4 text-white shadow-lg shadow-blue-900/20">
+   <div class="lg:grid lg:grid-cols-12 lg:gap-5 lg:items-stretch">
+    <div class="lg:col-span-7">
+    <div class="lg:h-full hero rounded-3xl p-4 text-white shadow-lg shadow-blue-900/20">
      <p class="text-xs text-blue-100"><i class="fa-solid fa-wallet mr-1"></i><span id="plabel"></span></p>
      <h2 id="bal" class="text-4xl font-bold mt-1 mb-3">৳ ০</h2>
      <div class="bg-white/15 rounded-full p-1 flex text-sm mb-3 ptabs"></div>
@@ -71,16 +73,16 @@ body{font-family:'Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transpar
      </div>
      <div class="mt-2.5 bg-white/15 rounded-xl px-3 py-2 text-xs flex justify-between"><span>মোট বাকি (পাওনা)</span><b id="s-due"></b></div>
     </div>
-    <div class="grid grid-cols-4 gap-2.5 mt-4" id="quick"></div>
+    </div>
+    <div class="hidden lg:flex lg:col-span-5 flex-col card rounded-3xl p-5"><h3 class="font-bold text-sm mb-3">আয় বনাম ব্যয়</h3><div id="c-donut" class="flex-1 flex flex-col justify-center"></div></div>
    </div>
-   <div class="hidden lg:block lg:col-span-2 card rounded-3xl p-4"><div class="flex justify-between items-center mb-2"><h3 class="font-bold text-sm">সাপ্তাহিক আয়-ব্যয়</h3><span class="flex gap-3 text-[11px] text-slate-500"><span><i class="fa-solid fa-circle text-[7px] text-brandSky"></i> আয়</span><span><i class="fa-solid fa-circle text-[7px] text-brandOrange"></i> ব্যয়</span></span></div><div id="c-trend"></div></div>
+   <div class="grid grid-cols-4 gap-2.5 mt-4 lg:mt-5" id="quick"></div>
+   <div class="hidden lg:grid grid-cols-2 gap-5 mt-5">
+    <div class="card rounded-3xl p-5"><div class="flex justify-between items-center mb-3"><h3 class="font-bold text-sm">সাপ্তাহিক আয়-ব্যয়</h3><span class="flex gap-3 text-[11px] text-slate-500"><span><i class="fa-solid fa-circle text-[7px] text-brandSky"></i> আয়</span><span><i class="fa-solid fa-circle text-[7px] text-brandOrange"></i> ব্যয়</span></span></div><div id="c-trend"></div></div>
+    <div class="card rounded-3xl p-5"><div class="flex justify-between items-center mb-3"><h3 class="font-bold text-sm">মাসিক হিসাব</h3><span class="flex gap-3 text-[11px] text-slate-500"><span><i class="fa-solid fa-circle text-[7px] text-brandSky"></i> আয়</span><span><i class="fa-solid fa-circle text-[7px] text-brandOrange"></i> ব্যয়</span></span></div><div id="c-bars"></div></div>
+   </div>
   </div>
-  <div class="hidden lg:grid grid-cols-5 gap-5 mt-5">
-   <div class="col-span-3 card rounded-3xl p-4"><div class="flex justify-between items-center mb-2"><h3 class="font-bold text-sm">মাসিক হিসাব</h3><span class="flex gap-3 text-[11px] text-slate-500"><span><i class="fa-solid fa-circle text-[7px] text-brandSky"></i> আয়</span><span><i class="fa-solid fa-circle text-[7px] text-brandOrange"></i> ব্যয়</span></span></div><div id="c-bars"></div></div>
-   <div class="col-span-2 card rounded-3xl p-4"><h3 class="font-bold text-sm mb-2">আয় বনাম ব্যয়</h3><div id="c-donut" class="relative"></div></div>
-  </div>
- </div>
- <div class="mt-5 lg:mt-0 panel rpanel">
+  <div class="mt-5 lg:mt-0 panel rpanel">
     <div id="chips" class="flex gap-2 overflow-x-auto no-sb"></div>
     <div id="strip" class="mt-3 px-3 py-2 rounded-xl bg-blue-50 dark:bg-slate-800 text-xs flex justify-between font-medium"></div>
     <h3 class="font-bold text-brandBlue dark:text-white mt-4">সাম্প্রতিক লেনদেন</h3>
@@ -125,7 +127,32 @@ body{font-family:'Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transpar
 <script>
 const URL_ = "https://script.google.com/macros/s/AKfycbzU7OeSZMRgEC-WscE9q_Ef2Oqa0AiFrLQLe3SJjTV-ysAujzg78s4fkYIM03zM0rWi/exec";
 const $ = id => document.getElementById(id);
-const bn = n => Number(n || 0).toLocaleString('bn-BD', { maximumFractionDigits: 2 });
+/* ---------- ভাষা / Language ---------- */
+let LANG=localStorage.getItem('at-lang')||'bn';
+const LOC=()=>LANG==='en'?'en-US':'bn-BD';
+const EN={"ড্যাশবোর্ড": "Dashboard", "ইনস্টল": "Install", "নগদ আয়": "Cash income", "ব্যয়": "Expense", "মোট বাকি (পাওনা)": "Total due (receivable)", "সাপ্তাহিক আয়-ব্যয়": "Weekly income & expense", "আয়": "Income", "মাসিক হিসাব": "Monthly summary", "আয় বনাম ব্যয়": "Income vs expense", "সাম্প্রতিক লেনদেন": "Recent transactions", "মোট স্টক": "Total stock", "নতুন প্রোডাক্ট": "New product", "প্রোডাক্ট খুঁজুন": "Search products", "রিপোর্ট": "Report", "আয়-ব্যয় ও লাভের হিসাব": "Income, expense & profit", "রিপোর্ট দেখুন": "View report", "আবার চেষ্টা করুন": "Try again", "বিক্রি": "Sale", "সার্ভিস": "Service", "মালামাল": "Goods", "অন্য আয়": "Other income", "আজ": "Today", "এই মাস": "This month", "সব": "All", "আজকের নগদ ব্যালেন্স": "Today's cash balance", "এই মাসের নগদ ব্যালেন্স": "This month's cash balance", "মোট নগদ ব্যালেন্স": "Total cash balance", "সব লেনদেন": "All transactions", "বাকি": "Due", "আদায়": "Collect", "কোনো লেনদেন নেই। \"+\" চেপে এন্ট্রি দিন।": "No transactions yet. Tap \"+\" to add one.", "জমা": "Received", "চলছে": "In progress", "তৈরি": "Ready", "ডেলিভারি": "Delivered", "পরিশোধিত": "Paid", "টাকা পেলাম": "Got payment", "কোনো সার্ভিস জব নেই": "No service jobs yet", "কোনো প্রোডাক্ট নেই।": "No products yet.", "কোনো প্রোডাক্ট নেই": "No products yet", "মালামাল বিক্রি": "Goods sales", "মালামাল লাভ": "Goods profit", "সার্ভিস আয়": "Service income", "সার্ভিস লাভ": "Service profit", "মোট ব্যয়": "Total expense", "নিট লাভ": "Net profit", "মোট বাকি": "Total due", "আজ নিট": "Today net", "এই মাস নিট": "This month net", "সব নিট": "All-time net", "টাকা আদায় হয়েছে": "Payment collected", "প্রোডাক্ট (তালিকা থেকে বা নিজে লিখুন)": "Product (pick from list or type)", "পরিমাণ": "Quantity", "একক বিক্রয় মূল্য (৳)": "Unit selling price (৳)", "কাস্টমার (ঐচ্ছিক)": "Customer (optional)", "জমা (৳)": "Paid (৳)", "খালি": "Blank", "পুরো টাকা": "Full amount", "ডিভাইস / মডেল": "Device / model", "সমস্যা": "Problem", "কাস্টমারের নাম": "Customer name", "ফোন": "Phone", "সার্ভিস চার্জ (৳)": "Service charge (৳)", "পার্টস খরচ (৳)": "Parts cost (৳)", "অগ্রিম জমা (৳)": "Advance paid (৳)", "খাত (যেমন: দোকান ভাড়া)": "Category (e.g. shop rent)", "বিবরণ": "Details", "টাকা (৳)": "Amount (৳)", "খাত": "Category", "প্রোডাক্ট": "Product", "নাম": "Name", "ক্যাটাগরি": "Category", "ক্রয় মূল্য (৳)": "Buying price (৳)", "বিক্রয় মূল্য (৳)": "Selling price (৳)", "স্টক (পিস)": "Stock (pcs)", "সেভ করুন": "Save", "স্টক": "Stock", "স্টক শেষ": "Out of stock", "তালিকায় নেই – নিজে লিখুন": "Not in list – type it", "কোনো প্রোডাক্ট নেই – \"প্রোডাক্ট\" ট্যাব থেকে যোগ করুন": "No products – add from the Product tab", "ফোনে সেভ হয়েছে, Excel এ পাঠানো হচ্ছে…": "Saved on phone, sending to Excel…", "Excel এ সেভ হয়েছে ✓": "Saved to Excel ✓", "হোম": "Home", "নতুন এন্ট্রি": "New entry", "নিট": "Net", "মোট": "Total", "Apps Script → Deploy → Manage deployments → \"Who has access\" = Anyone করে New version দিন": "Apps Script → Deploy → Manage deployments → set \"Who has access\" = Anyone, then New version", "ইন্টারনেট বা Apps Script লিংকে সংযোগ হচ্ছে না": "Cannot connect to the internet or the Apps Script link", "Code.gs এর নতুন ভার্সন Apps Script এ পেস্ট করে New version ডিপ্লয় করুন": "Paste the new Code.gs into Apps Script and deploy a New version"};
+const tr1=s=>EN[s]??s.replace(/^মোট (৳ .+)$/,'Total $1').replace(/^([\d.,]+)টি$/,'$1 items').replace(/^বাকি (৳ .+) – আদায়$/,'Due $1 – collect').replace(/^ক্রয় (৳ .+)$/,'Cost $1').replace(/^স্টক (\S.*)$/,'Stock $1').replace(/^([\d.,]+) পিস$/,'$1 pcs').replace(/^([\d.,]+)টি এন্ট্রি Excel এ যায়নি.*$/,'$1 entries not sent to Excel (saved on phone, will retry automatically)');
+const tr=t=>t.split(/( · | = )/).map((p,i)=>i%2?p:tr1(p)).join('').replace(/[০-৯]/g,d=>'০১২৩৪৫৬৭৮৯'.indexOf(d));
+function applyLang(){
+  const en=LANG==='en',w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;
+  while(n=w.nextNode()){
+    const v=n.nodeValue,p=n.parentNode&&n.parentNode.nodeName;
+    if(!/\S/.test(v)||p==='SCRIPT'||p==='STYLE')continue;
+    if(n.__o===undefined||(n.__t!==undefined&&v!==n.__t))n.__o=v;
+    const o=n.__o,nv=o.match(/^\s*/)[0]+(en?tr(o.trim()):o.trim())+o.match(/\s*$/)[0];
+    if(v!==nv)n.nodeValue=nv;n.__t=nv;
+  }
+  document.querySelectorAll('[placeholder]').forEach(e=>{if(e.dataset.ph===undefined)e.dataset.ph=e.placeholder;e.placeholder=en?tr(e.dataset.ph):e.dataset.ph});
+}
+let lq=0;new MutationObserver(()=>{if(LANG!=='en'||lq)return;lq=requestAnimationFrame(()=>{lq=0;applyLang()})}).observe(document.body,{childList:true,subtree:true});
+function setLang(){
+  LANG=LANG==='en'?'bn':'en';try{localStorage.setItem('at-lang',LANG)}catch(e){}
+  document.documentElement.lang=LANG;$('lang').textContent=LANG==='en'?'বাং':'EN';
+  render();applyLang();
+}
+document.documentElement.lang=LANG;$('lang').textContent=LANG==='en'?'বাং':'EN';
+
+const bn = n => Number(n || 0).toLocaleString(LOC(), { maximumFractionDigits: 2 });
 const taka = n => '৳ ' + bn(n);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dkey = d => { const x = new Date(d); return x.getFullYear() + '-' + String(x.getMonth()+1).padStart(2,'0') + '-' + String(x.getDate()).padStart(2,'0'); };
@@ -263,17 +290,17 @@ function rReport(){
 
 function rCharts(){
   if(!$('c-trend'))return;
-  const all=txs(),now=new Date(),W=300,H=120,lb=(x,y,t)=>`<text x="${x}" y="${y}" text-anchor="middle" font-size="9" fill="currentColor" opacity=".5">${t}</text>`;
+  const all=txs(),now=new Date(),W=300,H=130,lb=(x,y,t)=>`<text x="${x}" y="${y}" text-anchor="middle" font-size="9" fill="currentColor" opacity=".5">${t}</text>`;
   const agg=(fn,keys)=>keys.map(k=>{let i=0,o=0;all.forEach(t=>{if(fn(t)===k)t.k==='Expense'?o+=t.a:i+=t.p});return{i,o}});
   const days=[...Array(7)].map((_,n)=>{const d=new Date(now);d.setDate(d.getDate()-6+n);return d}),dv=agg(t=>t.d,days.map(dkey));
   const mx=Math.max(1,...dv.flatMap(x=>[x.i,x.o])),pts=f=>dv.map((x,n)=>[10+n*(W-20)/6,H-18-x[f]/mx*(H-38)]);
   const sm=p=>p.map((q,n)=>n?`C${(p[n-1][0]+q[0])/2},${p[n-1][1]} ${(p[n-1][0]+q[0])/2},${q[1]} ${q[0]},${q[1]}`:`M${q[0]},${q[1]}`).join('');
-  $('c-trend').innerHTML=`<svg viewBox="0 0 ${W} ${H}" class="w-full"><path d="${sm(pts('i'))}" fill="none" stroke="#00A8E8" stroke-width="2.5" stroke-linecap="round"/><path d="${sm(pts('o'))}" fill="none" stroke="#F26522" stroke-width="2.5" stroke-linecap="round"/>${days.map((d,n)=>lb(10+n*(W-20)/6,H-3,d.toLocaleDateString('bn-BD',{weekday:'short'}))).join('')}</svg>`;
+  $('c-trend').innerHTML=`<svg viewBox="0 0 ${W} ${H}" class="w-full"><path d="${sm(pts('i'))}" fill="none" stroke="#00A8E8" stroke-width="2.5" stroke-linecap="round"/><path d="${sm(pts('o'))}" fill="none" stroke="#F26522" stroke-width="2.5" stroke-linecap="round"/>${days.map((d,n)=>lb(10+n*(W-20)/6,H-3,d.toLocaleDateString(LOC(),{weekday:'short'}))).join('')}</svg>`;
   const ms=[...Array(6)].map((_,n)=>new Date(now.getFullYear(),now.getMonth()-5+n,1)),mv=agg(t=>t.d.slice(0,7),ms.map(d=>dkey(d).slice(0,7))),mm=Math.max(1,...mv.flatMap(x=>[x.i,x.o])),bw=50;
-  $('c-bars').innerHTML=`<svg viewBox="0 0 300 130" class="w-full">${mv.map((x,n)=>{const a=x.i/mm*95,b=x.o/mm*95,c=n*bw+bw/2;return `<rect x="${c-11}" y="${108-a}" width="9" height="${a}" rx="4.5" fill="#00A8E8"/><rect x="${c+2}" y="${108-b}" width="9" height="${b}" rx="4.5" fill="#F26522" opacity=".75"/>${lb(c,124,ms[n].toLocaleDateString('bn-BD',{month:'short'}))}`}).join('')}</svg>`;
+  $('c-bars').innerHTML=`<svg viewBox="0 0 300 130" class="w-full">${mv.map((x,n)=>{const a=x.i/mm*95,b=x.o/mm*95,c=n*bw+bw/2;return `<rect x="${c-11}" y="${108-a}" width="9" height="${a}" rx="4.5" fill="#00A8E8"/><rect x="${c+2}" y="${108-b}" width="9" height="${b}" rx="4.5" fill="#F26522" opacity=".75"/>${lb(c,124,ms[n].toLocaleDateString(LOC(),{month:'short'}))}`}).join('')}</svg>`;
   let i=0,o=0;all.filter(inP).forEach(t=>t.k==='Expense'?o+=t.a:i+=t.p);
   const R=44,C=2*Math.PI*R,f=i+o?i/(i+o):0;
-  $('c-donut').innerHTML=`<svg viewBox="0 0 120 120" class="w-36 mx-auto -rotate-90"><circle cx="60" cy="60" r="${R}" fill="none" stroke="${i+o?'#F26522':'#cbd5e1'}" stroke-opacity=".75" stroke-width="10"/><circle cx="60" cy="60" r="${R}" fill="none" stroke="#00A8E8" stroke-width="10" stroke-linecap="round" stroke-dasharray="${C*f} ${C}"/></svg><div class="absolute inset-0 flex flex-col items-center justify-center"><b>${taka(i-o)}</b><span class="text-[11px] text-slate-400">${PL[period]} নিট</span></div>`;
+  $('c-donut').innerHTML=`<div class="relative w-40 mx-auto"><svg viewBox="0 0 120 120" class="w-full -rotate-90"><circle cx="60" cy="60" r="${R}" fill="none" stroke="${i+o?'#F26522':'#cbd5e1'}" stroke-opacity=".75" stroke-width="10"/><circle cx="60" cy="60" r="${R}" fill="none" stroke="#00A8E8" stroke-width="10" stroke-linecap="round" stroke-dasharray="${C*f} ${C}"/></svg><div class="absolute inset-0 flex flex-col items-center justify-center"><b>${taka(i-o)}</b><span class="text-[11px] text-slate-400">${PL[period]} নিট</span></div></div><div class="mt-5 space-y-2 text-sm"><div class="flex justify-between"><span><i class="fa-solid fa-circle text-[8px] text-brandSky mr-2"></i>আয়</span><b>${taka(i)}</b></div><div class="flex justify-between"><span><i class="fa-solid fa-circle text-[8px] text-brandOrange mr-2"></i>ব্যয়</span><b>${taka(o)}</b></div></div>`;
 }
 
 /* ---------- Actions ---------- */
@@ -293,25 +320,40 @@ const F={
 };
 let cur='Sale';
 function openSheet(t){
-  cur=t||'Sale';
+  cur=t||'Sale';const op=document.getElementById('pdd');if(op)op.remove();
   $('seg').innerHTML=Object.keys(F).map(k=>`<button type="button" onclick="openSheet('${k}')" class="shrink-0 flex-1 px-3 py-2 rounded-lg font-medium ${k===cur?'bg-white dark:bg-slate-700 shadow text-brandBlue dark:text-white':'text-slate-500'}">${F[k][0]}</button>`).join('');
   $('form').innerHTML=F[cur][1].map(([k,l,ty,r,d])=>`<div><label class="block text-xs font-semibold text-slate-500 mb-1">${l}</label><input name="${k}" type="${ty}" ${ty==='number'?'inputmode="decimal" step="any"':''} ${k==='Product'?'autocomplete="off"':''} ${r?'required':''} ${d?'value="1"':''} class="w-full p-2.5 border border-slate-200 dark:border-slate-700 bg-transparent rounded-xl text-sm outline-none focus:ring-2 focus:ring-brandSky"></div>`).join('')+`<button class="w-full bg-brandSky text-white font-semibold py-3 rounded-xl shadow">সেভ করুন</button>`;
   if(cur==='Sale'){
-    const f=$('form'),inp=f.elements.Product,w=inp.parentElement,box=document.createElement('div');
-    w.classList.add('relative');inp.style.paddingRight='2rem';
-    w.insertAdjacentHTML('beforeend','<i class="fa-solid fa-chevron-down absolute right-3 top-[2.1rem] text-xs text-slate-400 pointer-events-none"></i>');
-    box.id='pdd';box.className='mt-1 max-h-48 overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800';w.appendChild(box);
-    const pick=p=>{inp.value=p.Name;f.elements.UnitPrice.value=num(p.SellPrice)};
-    const draw=()=>{const q=inp.value.trim().toLowerCase(),l=S.Products.filter(p=>!q||String(p.Name).toLowerCase().includes(q));
-      box.innerHTML=l.length?l.map(p=>`<button type="button" data-i="${esc(p.ID)}" class="w-full text-left px-3 py-2 flex justify-between gap-3 hover:bg-sky-50 dark:hover:bg-slate-700 ${num(p.Stock)<=0?'opacity-50':''}"><span class="text-sm font-medium truncate">${esc(p.Name)}</span><span class="text-[11px] text-slate-500 shrink-0">${num(p.Stock)>0?'স্টক '+bn(p.Stock):'স্টক শেষ'} · ${taka(p.SellPrice)}</span></button>`).join(''):`<p class="px-3 py-3 text-xs text-slate-400">${S.Products.length?'তালিকায় নেই – নিজে লিখুন':'কোনো প্রোডাক্ট নেই – "প্রোডাক্ট" ট্যাব থেকে যোগ করুন'}</p>`;box.classList.remove('hidden')};
-    inp.onfocus=draw;
-    inp.oninput=()=>{draw();const p=S.Products.find(x=>String(x.Name).trim().toLowerCase()===inp.value.trim().toLowerCase());if(p)f.elements.UnitPrice.value=num(p.SellPrice)};
-    box.onclick=e=>{const b=e.target.closest('[data-i]');if(!b)return;const p=S.Products.find(x=>String(x.ID)===b.dataset.i);if(p){pick(p);box.classList.add('hidden');f.elements.Qty.focus()}};
-    draw();
+    const f=$('form'),inp=f.elements.Product,w=inp.parentElement,pop=document.createElement('div');
+    w.classList.add('relative');inp.style.paddingRight='2.75rem';
+    w.insertAdjacentHTML('beforeend','<button type="button" id="pdd-btn" aria-label="Products" class="absolute right-1 bottom-1 w-10 h-10 rounded-lg flex items-center justify-center text-slate-400"><i class="fa-solid fa-chevron-down text-xs"></i></button>');
+    pop.id='pdd';pop.className='hidden rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-2xl overflow-y-auto';
+    pop.style.cssText='position:fixed;z-index:80';document.body.appendChild(pop);
+    let ai=-1,all=false;
+    const list=()=>{const q=inp.value.trim().toLowerCase();return S.Products.filter(p=>all||!q||String(p.Name).trim().toLowerCase()===q||(String(p.Name)+' '+String(p.Category||'')).toLowerCase().includes(q))};
+    const draw=()=>{const l=list();
+      pop.innerHTML=l.length?l.map((p,k)=>{const st=num(p.Stock);return `<button type="button" data-i="${esc(p.ID)}" data-k="${k}" class="w-full text-left px-4 py-2.5 flex items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-700 ${k===ai?'bg-sky-50 dark:bg-slate-700':''} ${st<=0?'opacity-60':''}"><span class="min-w-0"><span class="block text-sm font-semibold truncate">${esc(p.Name)}</span><span class="block text-xs text-slate-400 truncate">${esc(p.Category||'')}</span></span><span class="text-right shrink-0"><span class="block text-sm font-bold text-emerald-600">${taka(p.SellPrice)}</span><span class="block text-xs ${st<=0?'text-red-500':st<=num(p.MinStock||5)?'text-amber-600':'text-slate-500'}">${st>0?'স্টক '+bn(st):'স্টক শেষ'}</span></span></button>`}).join(''):`<p class="px-4 py-4 text-sm text-slate-400">${S.Products.length?'তালিকায় নেই – নিজে লিখুন':'কোনো প্রোডাক্ট নেই – "প্রোডাক্ট" ট্যাব থেকে যোগ করুন'}</p>`};
+    const place=()=>{const r=inp.getBoundingClientRect(),below=innerHeight-r.bottom-12,above=r.top-12,up=below<220&&above>below;
+      pop.style.left=r.left+'px';pop.style.width=r.width+'px';pop.style.maxHeight=Math.max(120,Math.min(300,up?above:below))+'px';
+      if(up){pop.style.top='auto';pop.style.bottom=(innerHeight-r.top+6)+'px'}else{pop.style.bottom='auto';pop.style.top=(r.bottom+6)+'px'}};
+    const show=a=>{const q=inp.value.trim().toLowerCase();all=a===true||S.Products.some(p=>String(p.Name).trim().toLowerCase()===q);draw();pop.classList.remove('hidden');place()},hide=()=>{pop.classList.add('hidden');ai=-1};
+    const pick=p=>{if(!p)return;inp.value=p.Name;f.elements.UnitPrice.value=num(p.SellPrice);hide();f.elements.Qty.focus();f.elements.Qty.select()};
+    inp.onfocus=inp.onclick=()=>show();
+    inp.oninput=()=>{ai=-1;show();const p=S.Products.find(x=>String(x.Name).trim().toLowerCase()===inp.value.trim().toLowerCase());if(p)f.elements.UnitPrice.value=num(p.SellPrice)};
+    inp.onkeydown=e=>{
+      if(pop.classList.contains('hidden')){if(e.key==='ArrowDown'){show();e.preventDefault()}return}
+      const n=pop.querySelectorAll('[data-i]').length;
+      if((e.key==='ArrowDown'||e.key==='ArrowUp')&&n){ai=(ai+(e.key==='ArrowDown'?1:-1)+n)%n;draw();const a=pop.querySelector(`[data-k="${ai}"]`);if(a)a.scrollIntoView({block:'nearest'});e.preventDefault()}
+      else if(e.key==='Enter'&&ai>=0){pick(list()[ai]);e.preventDefault()}
+      else if(e.key==='Escape'){hide();e.stopPropagation()}
+    };
+    $('pdd-btn').onclick=()=>pop.classList.contains('hidden')?show(true):hide();
+    pop.onclick=e=>{const b=e.target.closest('[data-i]');if(b)pick(S.Products.find(x=>String(x.ID)===b.dataset.i))};
+    $('sheet').onscroll=()=>{if(!pop.classList.contains('hidden'))place()};
   }
   $('bd').classList.remove('hidden');requestAnimationFrame(()=>$('sheet').classList.add('open'));
 }
-function closeSheet(){$('sheet').classList.remove('open');setTimeout(()=>$('bd').classList.add('hidden'),220)}
+function closeSheet(){const op=document.getElementById('pdd');if(op)op.remove();$('sheet').classList.remove('open');setTimeout(()=>$('bd').classList.add('hidden'),220)}
 function submitForm(e){
   e.preventDefault();
   const v=Object.fromEntries(new FormData(e.target)),date=dkey(new Date()),T=Date.now();
@@ -330,7 +372,7 @@ function submitForm(e){
 }
 
 /* ---------- Nav / UI ---------- */
-document.addEventListener('click',e=>{const d=$('pdd');if(d&&!e.target.closest('#pdd')&&e.target.name!=='Product')d.classList.add('hidden')});
+document.addEventListener('click',e=>{const d=$('pdd');if(d&&!e.target.closest('#pdd,#pdd-btn')&&e.target.name!=='Product')d.classList.add('hidden')});
 const NAV=[['home','হোম','fa-house'],['service','সার্ভিস','fa-screwdriver-wrench'],['fab'],['stock','স্টক','fa-boxes-stacked'],['report','রিপোর্ট','fa-chart-pie']];
 $('navi').innerHTML=NAV.map(n=>n[0]==='fab'?`<div class="flex justify-center md:order-first md:mb-3"><button onclick="openSheet('Sale')" class="-mt-8 md:mt-0 w-14 h-14 md:w-full md:h-11 rounded-full md:rounded-xl bg-brandSky text-white shadow-lg shadow-sky-500/40 flex items-center justify-center gap-2 text-2xl md:text-sm md:font-semibold border-4 md:border-0 border-slate-50 dark:border-slate-900"><i class="fa-solid fa-plus"></i><span class="hidden md:inline">নতুন এন্ট্রি</span></button></div>`:`<button data-nav="${n[0]}" onclick="go('${n[0]}')" class="flex flex-col md:flex-row items-center md:gap-3 md:px-3 md:py-2.5 md:rounded-xl gap-0.5 text-xs md:text-sm text-slate-400"><i class="fa-solid ${n[2]} text-lg md:w-5"></i>${n[1]}</button>`).join('');
 function go(v){view=v;['home','service','stock','report'].forEach(x=>$('v-'+x).classList.toggle('hidden',x!==v));
@@ -345,7 +387,7 @@ let dp;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;$('ins
 $('install').onclick=async()=>{if(!dp)return;dp.prompt();await dp.userChoice;dp=null;$('install').classList.add('hidden')};
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(()=>{}));
 
-go('home');render();flush();fetchData();
+go('home');render();applyLang();flush();fetchData();
 setInterval(refresh,30000);setInterval(flush,10000);
 document.addEventListener('visibilitychange',refresh);
 addEventListener('online',refresh);
