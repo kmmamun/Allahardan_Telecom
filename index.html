@@ -68,6 +68,7 @@ body{font-family:'Inter','Noto Sans Bengali','Hind Siliguri',system-ui,sans-seri
    </div>
    <div class="flex items-center gap-2">
     <button id="lang" onclick="setLang()" class="h-9 px-3 rounded-full card text-xs font-semibold shadow-sm">EN</button>
+    <button onclick="go('cust')" aria-label="কাস্টমার" class="md:hidden w-9 h-9 rounded-full card shadow-sm text-slate-600 dark:text-slate-200"><i class="fa-solid fa-address-book text-sm"></i></button>
     <button id="install" class="hidden h-9 px-3 rounded-full bg-brandOrange text-white text-xs shadow"><i class="fa-solid fa-download mr-1"></i>ইনস্টল</button>
     <button onclick="dark()" class="w-9 h-9 rounded-full card shadow-sm text-slate-600 dark:text-yellow-300"><i id="dk" class="fa-solid fa-moon text-sm"></i></button>
    </div>
@@ -131,7 +132,7 @@ body{font-family:'Inter','Noto Sans Bengali','Hind Siliguri',system-ui,sans-seri
 
 <nav id="nav" class="fixed z-40 bottom-0 inset-x-0 md:inset-y-4 md:left-4 md:right-auto md:w-60 card shadow-[0_-4px_20px_rgba(0,0,0,.08)] rounded-t-3xl md:rounded-3xl safe-b">
  <div class="hidden md:flex items-center gap-2.5 px-5 pt-5"><img src="icon-192.png" alt="" class="w-10 h-10 rounded-xl shadow"><div class="leading-tight"><p class="font-bold text-brandBlue dark:text-white">Allahardan</p><p class="text-[11px] text-slate-400">Telecom</p></div></div>
- <div class="grid grid-cols-6 items-center h-16 px-2 md:flex md:flex-col md:items-stretch md:h-auto md:p-3 md:gap-1 md:pt-5" id="navi"></div>
+ <div class="grid grid-cols-5 items-center h-16 px-2 md:flex md:flex-col md:items-stretch md:h-auto md:p-3 md:gap-1 md:pt-5" id="navi"></div>
  <div class="hidden md:block absolute bottom-4 inset-x-4 rounded-2xl p-4 text-center bg-white/50 dark:bg-slate-900/40"><i class="fa-solid fa-chart-pie text-3xl text-brandSky"></i><p class="font-semibold text-sm mt-2">রিপোর্ট</p><p class="text-[11px] text-slate-400">আয়-ব্যয় ও লাভের হিসাব</p><button onclick="go('report')" class="mt-3 w-full py-2 rounded-xl bg-brandBlue text-white text-sm">রিপোর্ট দেখুন</button></div>
 </nav>
 
@@ -498,7 +499,7 @@ function csv(){
 /* ---------- Nav / UI ---------- */
 document.addEventListener('click',e=>{const d=$('pdd');if(d&&!e.target.closest('#pdd,#pdd-btn')&&e.target.name!=='Product')d.classList.add('hidden')});
 const NAV=[['home','হোম','fa-house'],['service','সার্ভিস','fa-screwdriver-wrench'],['cust','কাস্টমার','fa-address-book'],['fab'],['stock','স্টক','fa-boxes-stacked'],['report','রিপোর্ট','fa-chart-pie']];
-$('navi').innerHTML=NAV.map(n=>n[0]==='fab'?`<div class="flex justify-center md:order-first md:mb-3"><button onclick="openSheet('Sale')" class="-mt-8 md:mt-0 w-14 h-14 md:w-full md:h-11 rounded-full md:rounded-xl bg-brandSky text-white shadow-lg shadow-sky-500/40 flex items-center justify-center gap-2 text-2xl md:text-sm md:font-semibold border-4 md:border-0 border-slate-50 dark:border-slate-900"><i class="fa-solid fa-plus"></i><span class="hidden md:inline">নতুন এন্ট্রি</span></button></div>`:`<button data-nav="${n[0]}" onclick="go('${n[0]}')" class="flex flex-col md:flex-row items-center md:gap-3 md:px-3 md:py-2.5 md:rounded-xl gap-0.5 text-xs md:text-sm text-slate-400"><i class="fa-solid ${n[2]} text-lg md:w-5"></i>${n[1]}</button>`).join('');
+$('navi').innerHTML=NAV.map(n=>n[0]==='fab'?`<div class="flex justify-center md:order-first md:mb-3"><button onclick="openSheet('Sale')" class="-mt-8 md:mt-0 w-14 h-14 md:w-full md:h-11 rounded-full md:rounded-xl bg-brandSky text-white shadow-lg shadow-sky-500/40 flex items-center justify-center gap-2 text-2xl md:text-sm md:font-semibold border-4 md:border-0 border-slate-50 dark:border-slate-900"><i class="fa-solid fa-plus"></i><span class="hidden md:inline">নতুন এন্ট্রি</span></button></div>`:`<button data-nav="${n[0]}" onclick="go('${n[0]}')" class="${n[0]==='cust'?'hidden md:flex':'flex'} flex-col md:flex-row items-center md:gap-3 md:px-3 md:py-2.5 md:rounded-xl gap-0.5 text-xs md:text-sm text-slate-400"><i class="fa-solid ${n[2]} text-lg md:w-5"></i>${n[1]}</button>`).join('');
 function go(v){view=v;['home','service','cust','stock','report'].forEach(x=>$('v-'+x).classList.toggle('hidden',x!==v));
   document.querySelectorAll('[data-nav]').forEach(b=>{const on=b.dataset.nav===v;b.classList.toggle('nav-on',on)});$('vt').textContent=({home:'ড্যাশবোর্ড',service:'সার্ভিস',cust:'কাস্টমার',stock:'স্টক',report:'রিপোর্ট'})[v];scrollTo(0,0)}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-p]');if(b){period=b.dataset.p;ptabs();rHome();rReport();rCharts()}});
