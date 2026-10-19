@@ -24,6 +24,18 @@ body{font-family:'Inter','Noto Sans Bengali','Hind Siliguri',system-ui,sans-seri
 .sheet{transform:translateY(100%);transition:transform .22s ease}.sheet.open{transform:none}
 .safe-b{padding-bottom:env(safe-area-inset-bottom,0)}
 .card{background:#fff}.dark .card{background:#1e293b}
+/* সক্রিয় মেনু স্পষ্ট করা */
+.nav-on{font-weight:700}
+@media(max-width:767px){.nav-on{color:#00A8E8!important}}
+@media(min-width:768px){
+ [data-nav]{transition:background .15s,color .15s}
+ [data-nav]:not(.nav-on){color:#475569}
+ .dark [data-nav]:not(.nav-on){color:#cbd5e1}
+ [data-nav]:not(.nav-on):hover{background:rgba(27,54,93,.08)}
+ .dark [data-nav]:not(.nav-on):hover{background:rgba(255,255,255,.08)}
+ .nav-on{color:#fff!important;background:linear-gradient(135deg,#1B365D,#2D5A9E)!important;box-shadow:0 6px 16px rgba(27,54,93,.30)}
+ .dark .nav-on{background:linear-gradient(135deg,#3B6FC4,#2D5A9E)!important;box-shadow:0 6px 16px rgba(59,111,196,.35)}
+}
 @media(min-width:768px){
  .sheet{left:50%!important;right:auto!important;top:50%!important;bottom:auto!important;width:28rem;max-width:92vw;max-height:90vh;transform:translate(-50%,-44%);opacity:0;pointer-events:none;border-radius:1.5rem!important;background:#fff!important;box-shadow:0 25px 60px rgba(15,23,42,.35)}
  .dark .sheet{background:#1e293b!important}
@@ -376,7 +388,7 @@ document.addEventListener('click',e=>{const d=$('pdd');if(d&&!e.target.closest('
 const NAV=[['home','হোম','fa-house'],['service','সার্ভিস','fa-screwdriver-wrench'],['fab'],['stock','স্টক','fa-boxes-stacked'],['report','রিপোর্ট','fa-chart-pie']];
 $('navi').innerHTML=NAV.map(n=>n[0]==='fab'?`<div class="flex justify-center md:order-first md:mb-3"><button onclick="openSheet('Sale')" class="-mt-8 md:mt-0 w-14 h-14 md:w-full md:h-11 rounded-full md:rounded-xl bg-brandSky text-white shadow-lg shadow-sky-500/40 flex items-center justify-center gap-2 text-2xl md:text-sm md:font-semibold border-4 md:border-0 border-slate-50 dark:border-slate-900"><i class="fa-solid fa-plus"></i><span class="hidden md:inline">নতুন এন্ট্রি</span></button></div>`:`<button data-nav="${n[0]}" onclick="go('${n[0]}')" class="flex flex-col md:flex-row items-center md:gap-3 md:px-3 md:py-2.5 md:rounded-xl gap-0.5 text-xs md:text-sm text-slate-400"><i class="fa-solid ${n[2]} text-lg md:w-5"></i>${n[1]}</button>`).join('');
 function go(v){view=v;['home','service','stock','report'].forEach(x=>$('v-'+x).classList.toggle('hidden',x!==v));
-  document.querySelectorAll('[data-nav]').forEach(b=>{const on=b.dataset.nav===v;b.classList.toggle('text-brandSky',on);b.classList.toggle('md:bg-sky-50',on);b.classList.toggle('dark:md:bg-slate-700',on)});$('vt').textContent=({home:'ড্যাশবোর্ড',service:'সার্ভিস',stock:'স্টক',report:'রিপোর্ট'})[v];scrollTo(0,0)}
+  document.querySelectorAll('[data-nav]').forEach(b=>{const on=b.dataset.nav===v;b.classList.toggle('nav-on',on)});$('vt').textContent=({home:'ড্যাশবোর্ড',service:'সার্ভিস',stock:'স্টক',report:'রিপোর্ট'})[v];scrollTo(0,0)}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-p]');if(b){period=b.dataset.p;ptabs();rHome();rReport();rCharts()}});
 $('quick').innerHTML=[['Sale','fa-cart-shopping','bg-orange-100 dark:bg-orange-500/20 text-brandOrange','মালামাল'],['Service','fa-screwdriver-wrench','bg-sky-100 dark:bg-sky-500/20 text-brandSky','সার্ভিস'],['Income','fa-plus','bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600','অন্য আয়'],['Expense','fa-minus','bg-red-100 dark:bg-red-500/20 text-red-500','ব্যয়']].map(q=>`<button onclick="openSheet('${q[0]}')" class="card rounded-2xl py-3 shadow-sm flex flex-col items-center gap-1.5"><span class="w-10 h-10 rounded-full flex items-center justify-center ${q[2]}"><i class="fa-solid ${q[1]}"></i></span><span class="text-[11px] font-medium">${q[3]}</span></button>`).join('');
 function dark(){const on=document.documentElement.classList.toggle('dark');$('dk').className='fa-solid text-sm '+(on?'fa-sun':'fa-moon');try{localStorage.setItem('at-dark',on?'1':'0')}catch(e){}}
